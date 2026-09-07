@@ -1,19 +1,70 @@
 name: Build APK
+
 on: [push, workflow_dispatch]
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install buildozer
-        run: pip install buildozer cython==0.29.36
-      - name: Build APK
-        run: buildozer -v android debug
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: apk
-          path: bin/*.apk
+build:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v4
+
+  - name: Setup Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: "3.11"
+
+  - name: Setup Java
+    uses: actions/setup-java@v4
+    with:
+      distribution: temurin
+      java-version: "17"
+
+  - name: Install build tools and libraries
+    run: |
+      sudo apt-get update
+      sudo apt-get install -y \
+        git \
+        zip \
+        unzip \
+        autoconf \
+        automake \
+        libtool \
+        libtool-bin \
+        pkg-config \
+        cmake \
+        make \
+        gcc \
+        g++ \
+        zlib1g-dev \
+        libncurses5-dev \
+        libncursesw5-dev \
+        libffi-dev \
+        libssl-dev
+
+  - name: Install Buildozer
+    working-directory: plastic_sorter_mobile
+    run: |
+      python -m pip install --upgrade pip
+      python -m pip install "Cython<3"
+      python -m pip install buildozer
+
+  - name: Build APK
+    working-directory: plastic_sorter_mobile
+    run: |
+      yes | buildozer android debug
+
+  - name: Check APK
+    run: |
+      echo "Searching for APK..."
+      find plastic_sorter_mobile/bin -type f -name "*.apk" -print
+
+  - name: Upload APK
+    uses: actions/upload-artifact@v4
+    with:
+      name: plastic-sorter-apk
+      path: plastic_sorter_mobile/bin/*.apk
+      if-no-files-found: error
+```
