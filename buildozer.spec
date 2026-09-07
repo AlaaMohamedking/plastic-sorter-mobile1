@@ -1,7 +1,8 @@
 [app]
+
 title = فرز البلاستيك
 package.name = plasticsorter
-package.domain = org.example
+package.domain = org.plasticsorter
 
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,json
@@ -14,8 +15,6 @@ orientation = portrait
 fullscreen = 0
 
 permissions = INTERNET,CAMERA,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
-
-icon.filename = %(source.dir)s/icon.png
 
 android.permissions = INTERNET,CAMERA,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
 android.features = android.hardware.usb.host
@@ -31,5 +30,6 @@ android.accept_sdk_license = True
 android.entrypoint = org.kivy.android.PythonActivity
 
 [buildozer]
+
 log_level = 2
 warn_on_root = 1
