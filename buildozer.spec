@@ -10,7 +10,7 @@ version = 1.0
 
 # المكتبات المطلوبة - usb4a/usbserial4a للاتصال بالأردوينو عبر كابل OTG
 # arabic_reshaper و python-bidi لعرض النص العربى صح
-requirements = python3==3.11.9,kivy,pyjnius,usb4a,usbserial4a,arabic_reshaper,python-bidi
+requirements = python3==3.11.9,hostpython3==3.11.9,kivy,pyjnius,usb4a,usbserial4a,arabic_reshaper,python-bidi
 
 orientation = portrait
 fullscreen = 0
